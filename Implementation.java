@@ -42,6 +42,33 @@ public class Implementation {
         isvisited[src] = false;
     }
 
+    public static String SHORTESTPATH;
+    public static Integer shortestPathWeight = Integer.MAX_VALUE;
+    public static String LONGESTPATH;
+    public static Integer longestPathWeight = Integer.MIN_VALUE;
+
+    public static void bestPathFinder(ArrayList<Edge>[] graph, int src, int dest, boolean[] isvisited, String paths,
+            int weight) {
+        if (src == dest) {
+            if (weight < shortestPathWeight) {
+                SHORTESTPATH = paths;
+                shortestPathWeight = weight;
+            }
+            if (weight > longestPathWeight) {
+                LONGESTPATH = paths;
+                longestPathWeight = weight;
+            }
+            return;
+        }
+        isvisited[src] = true;
+        for (Edge edge : graph[src]) {
+            if (isvisited[edge.destination] == false)
+                bestPathFinder(graph, edge.destination, dest, isvisited, paths + " " + edge.destination,
+                        weight + edge.weight);
+        }
+        isvisited[src] = false;
+    }
+
     public static void main(String[] args) {
         int vertexes = 7; /* 0 1 2 3 4 5 6 */
         int src = 0, dest = 4;
@@ -81,6 +108,20 @@ public class Implementation {
         /* Print all paths from source to destination */ {
             boolean[] isvisited = new boolean[vertexes];
             printAllPaths(graph, src, dest, isvisited, src + "");
+        }
+
+        System.out.println();
+
+        /* Shortest Longest Path in Graph */ {
+            
+            boolean[] isvisited = new boolean[vertexes];
+            bestPathFinder(graph, src, dest, isvisited, src + "", 0);
+
+            System.out.println("Shortest PATH : " + SHORTESTPATH);
+            System.out.println("Shortest Path Weight : " + shortestPathWeight);
+            System.out.println("Longest PATH : " + LONGESTPATH);
+            System.out.println("Longest Path Weight : " + longestPathWeight);
+
         }
 
     }
