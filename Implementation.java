@@ -78,6 +78,17 @@ public class Implementation {
         }
     }
 
+    public static void isConnected(ArrayList<Edge>[] graph, int src, boolean[] isvisited, ArrayList<Integer> list) {
+        isvisited[src] = true;
+        list.add(src);
+        for (Edge edge : graph[src]) {
+            if (isvisited[src] == false) {
+                isConnected(graph, edge.destination, isvisited, list);
+            }
+        }
+    }
+
+
     public static void main(String[] args) {
         int vertexes = 8; /* 0 1 2 3 4 5 6 7 */
         int src = 0, dest = 4;
@@ -115,6 +126,7 @@ public class Implementation {
 
         graph[7].add(new Edge(7, 4, 85));
         graph[7].add(new Edge(7, 6, 75));
+
 
         /* Graph contains path from given source to destination */ {
 
@@ -158,9 +170,11 @@ public class Implementation {
                 }
             }
 
-            System.out.println(component);
+            System.out.println("DFS : " + component);
 
         }
+
+        System.out.println();
 
         /* Display Graph */ {
 
@@ -172,8 +186,24 @@ public class Implementation {
                 }
                 System.out.println();
             }
-            
+
         }
+
+        /* Graph is connected or not */ {
+            boolean[] isvisited = new boolean[vertexes];
+            ArrayList<ArrayList<Integer>> component = new ArrayList<>();
+            for (int i = 0; i < vertexes; i++) {
+                if (isvisited[i] == false) {
+                    ArrayList<Integer> list = new ArrayList<>();
+                    isConnected(graph ,i ,isvisited ,list);
+                    component.add(list);
+                }
+            }
+
+            System.out.println(component);
+        }
+
+        
 
     }
 }
