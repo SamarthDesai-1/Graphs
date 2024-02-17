@@ -203,6 +203,7 @@ public class Implementation {
 
     public static ArrayList<ArrayList<Integer>> ans = new ArrayList<>();
     public static void allPaths(ArrayList<Edge>[] graph ,boolean[] isvisited ,int src ,int dest ,String path ,ArrayList<Integer> list) {
+        
         if (src == dest) {
             list.add(dest);
             ans.add(new ArrayList<>(list));
@@ -621,7 +622,7 @@ public class Implementation {
 
             /*
             
-                Dijkstra algorithm is same as BFS but the only dufference is BFS use Simple QUEUE instead DIJKSTRA use Priority QUEUE.
+                Dijkstra algorithm is same as BFS but the only difference is BFS use Simple QUEUE instead DIJKSTRA use Priority QUEUE.
                 
             */
 
@@ -755,7 +756,9 @@ public class Implementation {
         int level;
 
         /*
+        
             I add level variable for only isBipartite problem and for other problem i pass level variable as 0  
+            
         */
 
         Pair(int vertex ,String path ,int level) {
